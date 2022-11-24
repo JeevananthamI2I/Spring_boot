@@ -26,11 +26,11 @@ public class BaseModel {
 	private boolean isDeleted;
 	
 	@CreationTimestamp
-	@Column(name = "create_at")
+	@Column(name = "create_at" ,nullable = false, updatable = false)
 	private Date createdAt;
 	
 	@UpdateTimestamp
-	@Column(name = "updated_at")
+	@Column(name = "updated_at" ,nullable = false, updatable = false)
 	private Date updatedAt;
 
 	public int getId() {

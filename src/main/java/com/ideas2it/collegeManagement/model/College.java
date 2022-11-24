@@ -1,9 +1,15 @@
 package com.ideas2it.collegeManagement.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -14,26 +20,41 @@ import com.ideas2it.collegeManagement.util.enumeration.Type;
 @Where(clause = "is_deleted = false")
 @Entity
 public class College extends BaseModel {
+
 	@Column(name = "name", nullable = false)
 	private String name;
+
 	@Column(name = "university", nullable = false)
 	private String university;
+
 	@Column(name = "grade", nullable = false)
 	private String rank;
+
 	@Column(name = "place", nullable = false)
 	private String place;
+
 	@Column(name = "inauguration_date", nullable = false)
 	private Date inaugurationDate;
+
 	@Column(name = "type", nullable = false)
 	private Type type;
+
 	@Column(name = "code", nullable = false, unique = true)
 	private String code;
+
+	// @ManyToMany(mappedBy = "colleges", fetch = FetchType.LAZY)
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "colleges_departments", joinColumns = {
+			@JoinColumn(name = "college_id", nullable = false, updatable = false) }, inverseJoinColumns = {
+					@JoinColumn(name = "department_id", nullable = false, updatable = false) })
+	private List<Department> departments;
 
 	public College() {
 	}
 
 	public College(String name, String university, String rank, String place, Date inaugurationDate, Type type,
-			String code) {
+			String code, List<Department> departments) {
 		this.name = name;
 		this.university = university;
 		this.rank = rank;
@@ -41,6 +62,7 @@ public class College extends BaseModel {
 		this.inaugurationDate = inaugurationDate;
 		this.type = type;
 		this.code = code;
+		this.departments = departments;
 	}
 
 	public String getName() {
@@ -98,7 +120,13 @@ public class College extends BaseModel {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	// @ManyToMany(mappedBy = "colleges", fetch = FetchType.LAZY)
-	// private List<Department> departments;
+
+	public List<Department> getDepartments() {
+		return departments;
+	}
+
+	public void setDepartments(List<Department> departments) {
+		this.departments = departments;
+	}
 
 }

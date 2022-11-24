@@ -1,5 +1,6 @@
 package com.ideas2it.collegeManagement.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,9 @@ import org.springframework.stereotype.Service;
 import com.ideas2it.collegeManagement.dao.CollegeDao;
 import com.ideas2it.collegeManagement.model.College;
 import com.ideas2it.collegeManagement.service.CollegeService;
+import com.ideas2it.collegeManagement.util.DateUtil;
+import com.ideas2it.collegeManagement.util.enumeration.Type;
+import com.ideas2it.collegeManagement.util.exception.CollegeManagementException;
 
 @Service
 public class CollegeServiceImpl implements CollegeService {
@@ -30,20 +34,33 @@ public class CollegeServiceImpl implements CollegeService {
 	}
 
 	public College getCollege(int id) {
-		return collegeRepository.findById(id).get();
+		return collegeRepository.findById(id).get(); 
 
 	}
 
 	public String deleteCollege(int id) {
 		collegeRepository.deleteById(id);
-		return "remove" + id;
+		return "Successful Delete your id " + id;
 	}
 
 	public College updateCollege(College college, int id) {
-		if(null != collegeRepository.findById(id)) {
-		    collegeRepository.save(college);
-		    return college;
+		College existingCollege = collegeRepository.findById(id).orElse(null);
+		if(null != existingCollege) {
+		existingCollege.setName(college.getName());
+		existingCollege.setPlace(college.getPlace());		
+		existingCollege.setInaugurationDate(college.getInaugurationDate());
+		existingCollege.setRank(college.getRank());
+		existingCollege.setType(college.getType());
+		existingCollege.setUniversity(college.getUniversity());
 		}
+		collegeRepository.save(existingCollege);
+		return existingCollege;
+		
+	}
+
+	@Override
+	public List<College> rangeBetweenTwoDate(Date from, Date to) {
+		
 		return null;
 	}
 
