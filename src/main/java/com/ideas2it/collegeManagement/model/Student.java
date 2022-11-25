@@ -33,7 +33,9 @@ public class Student extends BaseModel {
     private String place;
     @Column(name = "code", unique = true, nullable = false)
     private String code;
-    @ManyToOne(cascade = CascadeType.ALL)
+    
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "department_id",columnDefinition = "int")
     private Department department;
 
     public Student () {}

@@ -44,11 +44,11 @@ public class College extends BaseModel {
 
 	// @ManyToMany(mappedBy = "colleges", fetch = FetchType.LAZY)
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "colleges_departments", joinColumns = {
-			@JoinColumn(name = "college_id", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "department_id", nullable = false, updatable = false) })
-	private List<Department> departments;
+//	@ManyToMany(cascade = CascadeType.ALL)
+//	@JoinTable(name = "colleges_departments", joinColumns = {
+//			@JoinColumn(name = "college_id", nullable = false, updatable = false) }, inverseJoinColumns = {
+//					@JoinColumn(name = "department_id", nullable = false, updatable = false) })
+//	private List<Department> departments;
 
 	public College() {
 	}
@@ -62,7 +62,7 @@ public class College extends BaseModel {
 		this.inaugurationDate = inaugurationDate;
 		this.type = type;
 		this.code = code;
-		this.departments = departments;
+		//this.departments = departments;
 	}
 
 	public String getName() {
@@ -121,12 +121,12 @@ public class College extends BaseModel {
 		this.code = code;
 	}
 
-	public List<Department> getDepartments() {
-		return departments;
-	}
-
-	public void setDepartments(List<Department> departments) {
-		this.departments = departments;
-	}
+//	public List<Department> getDepartments() {
+//		return departments;
+//	}
+//
+//	public void setDepartments(List<Department> departments) {
+//		this.departments = departments;
+//	}
 
 }

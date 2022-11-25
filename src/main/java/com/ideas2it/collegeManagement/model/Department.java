@@ -7,6 +7,8 @@ import javax.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * <p>
  * The College class have attributes.
@@ -32,10 +34,12 @@ public class Department extends BaseModel {
 //    joinColumns = {@JoinColumn(name = "department_id" ,nullable = false, updatable = false)},
 //    inverseJoinColumns = {@JoinColumn(name = "college_id",nullable = false, updatable = false)})
    
-    @ManyToMany(mappedBy = "departments", fetch = FetchType.LAZY)
-    private List<College> colleges;
+//    @ManyToMany(mappedBy = "departments", fetch = FetchType.LAZY)
+//    private List<College> colleges;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "department",cascade = {CascadeType.ALL})
+    @JoinColumn(name = "department_id",referencedColumnName ="id")
     private List<Student> students;
 
     public Department(String name, String code) {
@@ -51,7 +55,7 @@ public class Department extends BaseModel {
 
     public void setCode(String code) {
         this.code = code;
-    }
+    } 
 
     public void setName(String name) {
         this.name = name;
@@ -69,11 +73,11 @@ public class Department extends BaseModel {
 //        return colleges;
 //    }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    } 
+//    public void setStudents(List<Student> students) {
+//        this.students = students;
+//    }
+//
+//    public List<Student> getStudents() {
+//        return students;
+//    } 
 }

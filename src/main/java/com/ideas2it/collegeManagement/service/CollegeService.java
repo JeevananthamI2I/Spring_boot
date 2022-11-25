@@ -20,6 +20,12 @@ public interface CollegeService {
 
 	public College updateCollege(College college, int id);
 
-	public List<College> rangeBetweenTwoDate(Date from, Date to);
+	//public List<College> rangeBetweenTwoDate(Date startDate, Date endDate);
+
+	public List<College> findCollegeByDate(Date startDate, Date endDate);
+
+	//public List<College> getCollegeByIds(List<Integer> ids);
+
+	List<College> getCollegesByMultipleId(List<Integer> ids);
 
 }

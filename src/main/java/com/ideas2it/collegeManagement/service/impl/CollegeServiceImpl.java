@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.ideas2it.collegeManagement.dao.CollegeDao;
 import com.ideas2it.collegeManagement.model.College;
+import com.ideas2it.collegeManagement.model.Department;
 import com.ideas2it.collegeManagement.service.CollegeService;
+import com.ideas2it.collegeManagement.service.DepartmentService;
 import com.ideas2it.collegeManagement.util.DateUtil;
 import com.ideas2it.collegeManagement.util.enumeration.Type;
 import com.ideas2it.collegeManagement.util.exception.CollegeManagementException;
@@ -18,8 +20,10 @@ public class CollegeServiceImpl implements CollegeService {
 
 	@Autowired
 	CollegeDao collegeRepository;
-
+	DepartmentService departmentService;
+	
 	public College saveCollege(College college) {
+		//departmentService.getDepartments();
 		college.setCode(Code());
 		return collegeRepository.save(college);
 	}
@@ -58,10 +62,27 @@ public class CollegeServiceImpl implements CollegeService {
 		
 	}
 
+//	@Override
+//	public List<College> rangeBetweenTwoDate(Date startdate, Date endDate) {
+//		return collegeRepository.findByInaugurationDateBetween(startdate, endDate);
+//		//return null;	 
+//	}
+
+	
+//	public List<College> getCollegesByMultipleId(List<Integer> ids) {
+//		
+//		return collegeRepository.findByIdIn(ids);
+//	}
+
 	@Override
-	public List<College> rangeBetweenTwoDate(Date from, Date to) {
-		
-		return null;
+	public List<College> findCollegeByDate(Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return collegeRepository.findByInaugurationDateBetween(startDate, endDate);
+	}
+
+	public List<College> getCollegesByMultipleId(List<Integer> ids) {
+
+		return collegeRepository.findByIdIn(ids);
 	}
 
 }
