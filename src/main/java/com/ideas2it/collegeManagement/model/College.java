@@ -16,6 +16,15 @@ import org.hibernate.annotations.Where;
 
 import com.ideas2it.collegeManagement.util.enumeration.Type;
 
+/**
+ * <p>
+ * The College class have attributes.
+ * This class contain getter and setter method for College attributes
+ * </p>
+ *
+ * @author jeevanantham
+ * @version 1.0  10 AUG 2022
+ */
 @SQLDelete(sql = "UPDATE College SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted = false")
 @Entity
@@ -42,13 +51,8 @@ public class College extends BaseModel {
 	@Column(name = "code", nullable = false, unique = true)
 	private String code;
 
-	// @ManyToMany(mappedBy = "colleges", fetch = FetchType.LAZY)
-
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	@JoinTable(name = "colleges_departments", joinColumns = {
-//			@JoinColumn(name = "college_id", nullable = false, updatable = false) }, inverseJoinColumns = {
-//					@JoinColumn(name = "department_id", nullable = false, updatable = false) })
-//	private List<Department> departments;
+	@ManyToMany(mappedBy = "colleges")
+	private List<Department> departments;
 
 	public College() {
 	}
@@ -62,7 +66,7 @@ public class College extends BaseModel {
 		this.inaugurationDate = inaugurationDate;
 		this.type = type;
 		this.code = code;
-		//this.departments = departments;
+		this.departments = departments;
 	}
 
 	public String getName() {
@@ -121,12 +125,45 @@ public class College extends BaseModel {
 		this.code = code;
 	}
 
-//	public List<Department> getDepartments() {
-//		return departments;
-//	}
-//
-//	public void setDepartments(List<Department> departments) {
-//		this.departments = departments;
-//	}
+	public List<Department> getDepartments() {
+		return departments;
+	}
+
+	public void setDepartments(List<Department> departments) {
+		this.departments = departments;
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//@ManyToMany(mappedBy = "colleges", fetch = FetchType.LAZY)
+
+//	@ManyToMany(cascade = CascadeType.ALL)
+//	@JoinTable(name = "colleges_departments", joinColumns = {
+//			@JoinColumn(name = "college_id", nullable = false, updatable = false) }, inverseJoinColumns = {
+//					@JoinColumn(name = "department_id", nullable = false, updatable = false) })
+//	private List<Department> departments;

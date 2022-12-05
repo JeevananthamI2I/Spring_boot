@@ -12,14 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ideas2it.collegeManagement.model.College;
 
 public interface CollegeDao extends JpaRepository<College, Integer> {
+		
+	@Query(value = "select count(id) from college" , nativeQuery = true)
+    Long getCollegesCount();
 	
-	//@Modifying
-    //@Transactional
-   //@Query("select c from College c where c.inaugurationDate >= :from and c.inaugurationDate <= :to ")
-	//@Query(value = "from College c where inaugurationDate BETWEEN :startDate AND :endDate")
-	//List<College> findByInaugurationDateBetween(Date from,Date to);
-	
-	//List<College> findByNameLike(String name);
 	@Query("select c from College c where c.name like %:keyword% or c.name like %:keyword% or c.university like %:keyword%")
     List<College> searchProduct(@Param("keyword") String value);
 

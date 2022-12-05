@@ -3,6 +3,7 @@ package com.ideas2it.collegeManagement.service;
 import java.util.Date;
 import java.util.List;
 
+import com.ideas2it.collegeManagement.dto.CollegeDto;
 import com.ideas2it.collegeManagement.model.College;
 import com.ideas2it.collegeManagement.util.exception.CollegeManagementException;
 
@@ -10,22 +11,18 @@ public interface CollegeService {
 
 	public College saveCollege(College college);
 	
-	public String Code();
+	public String generateCode();
 
-	public List<College> getColleges();
+	public List<College> getColleges() throws CollegeManagementException;
 	
-	public College getCollege(int id);
+	public College getCollege(int id) throws CollegeManagementException;
 	
 	public String deleteCollege(int id);
 
-	public College updateCollege(College college, int id);
-
-	//public List<College> rangeBetweenTwoDate(Date startDate, Date endDate);
+	public CollegeDto updateCollege(CollegeDto collegeDto, int id) throws CollegeManagementException;
 
 	public List<College> findCollegeByDate(Date startDate, Date endDate);
 
-	//public List<College> getCollegeByIds(List<Integer> ids);
-
-	List<College> getCollegesByMultipleId(List<Integer> ids);
+	public List<College> getCollegesByMultipleId(List<Integer> ids);
 
 }

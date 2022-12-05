@@ -21,7 +21,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	public String Code() {
-		long value = studentRepository.count();
+		long value = studentRepository.getStudentCount();
 		return "STU" + (++value);
 	}
 

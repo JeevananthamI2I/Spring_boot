@@ -11,12 +11,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * <p>
- * The College class have attributes.
- * This class contain getter and setter method for department attributes
+ * The College class have attributes. This class contain getter and setter
+ * method for department attributes
  * </p>
  *
  * @author jeevanantham
- * @version 1.0  22 SEP 2022
+ * @version 1.0 22 SEP 2022
  */
 
 @SQLDelete(sql = "UPDATE departments SET is_deleted = true WHERE id=?")
@@ -24,60 +24,86 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "departments")
 public class Department extends BaseModel {
-    @Column(name = "name", nullable = false)
-    private String name;
+	@Column(name = "name", nullable = false)
+	private String name;
 
-    @Column(name = "code", unique = true, nullable = false)
-    private String code;
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "colleges_departments",
-//    joinColumns = {@JoinColumn(name = "department_id" ,nullable = false, updatable = false)},
-//    inverseJoinColumns = {@JoinColumn(name = "college_id",nullable = false, updatable = false)})
-   
-//    @ManyToMany(mappedBy = "departments", fetch = FetchType.LAZY)
-//    private List<College> colleges;
-    
+	@Column(name = "code", unique = true, nullable = false)
+	private String code;
+
+
     @JsonIgnore
     @OneToMany(mappedBy = "department",cascade = {CascadeType.ALL})
     @JoinColumn(name = "department_id",referencedColumnName ="id")
     private List<Student> students;
 
-    public Department(String name, String code) {
-        this.name = name;
-        this.code = code;
+    @ManyToMany()
+	@JoinTable(name = "colleges_departments", joinColumns = @JoinColumn(name = "college_id"), inverseJoinColumns = @JoinColumn(name = "department_id"))
+	private List<College> colleges;
+
+	public Department(String name, String code) {
+		this.name = name;
+		this.code = code;
+	}
+
+	public Department() {
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setColleges(List<College> colleges) {
+		this.colleges = colleges;
+	}
+
+	public List<College> getColleges() {
+		return colleges;
+	}
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 
-    public  Department() {}
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
+    public List<Student> getStudents() {
+        return students;
     } 
-
-    public void setName(String name) {
-        this.name = name;
-    }
- 
-    public String getName() {
-        return name;
-    }
-
-//    public void setColleges(List<College> colleges) {
-//        this.colleges = colleges;
-//    }
-//
-//    public List<College> getColleges() {
-//        return colleges;
-//    }
-
-//    public void setStudents(List<Student> students) {
-//        this.students = students;
-//    }
-//
-//    public List<Student> getStudents() {
-//        return students;
-//    } 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//@ManyToMany(cascade = CascadeType.ALL)
+//@JoinTable(name = "colleges_departments",
+//joinColumns = {@JoinColumn(name = "department_id" ,nullable = false, updatable = false)},
+//inverseJoinColumns = {@JoinColumn(name = "college_id",nullable = false, updatable = false)})
+
+//@ManyToMany(mappedBy = "departments", fetch = FetchType.LAZY)
+//private List<College> colleges;

@@ -1,9 +1,8 @@
 package com.ideas2it.collegeManagement.util.exception;
 
+import org.springframework.http.HttpStatus;
 
-
-	
-	/**
+/**
 	 * <p>
 	 * This class is used to create custom exception and use this function.
 	 * <p>
@@ -13,11 +12,20 @@ package com.ideas2it.collegeManagement.util.exception;
 	 */
 public class CollegeManagementException  extends Exception {
 
-	    public CollegeManagementException (String message) {
+	    private String code;
+		private HttpStatus status;
+
+		public CollegeManagementException (String message) {
 	        super (message);
 	    }
 
 	   public CollegeManagementException(String message, Throwable throwable) {
 	       super (message);
 	   }
+	   
+	   public CollegeManagementException(String message, String code, HttpStatus status) {
+			super(message);
+			this.code = code;
+			this.status = status;
+		}
 	}

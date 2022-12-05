@@ -21,7 +21,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	public String Code() {
-		long value = departmentRepository.count();
+		long value = departmentRepository.getDepartmentCount();
 		return "DEP" + (++value);
 	}
 

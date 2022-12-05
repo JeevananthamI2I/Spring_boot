@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ideas2it.collegeManagement.converter.StudentConverter;
+import com.ideas2it.collegeManagement.dto.StudentDto;
 import com.ideas2it.collegeManagement.model.Student;
 import com.ideas2it.collegeManagement.service.StudentService;
 
@@ -19,20 +21,22 @@ public class StudentController {
 
 	@Autowired
 	StudentService studentService;
-
+	@Autowired
+	StudentConverter studentConverter;
+	
 	@PostMapping("/addStudent")
-	public Student addStudent(@RequestBody Student Student) {
-		return studentService.saveStudent(Student);
+	public StudentDto addStudent(@RequestBody Student Student) {
+		return studentConverter.entityToDto(studentService.saveStudent(Student));
 	}
 
 	@GetMapping("/viewStudents")
-	public List<Student> viewStudent() {
-		return studentService.getStudents();
+	public List<StudentDto> viewStudent() {
+		return studentConverter.entityToDto(studentService.getStudents());
 	}
 
 	@GetMapping("/viewStudent/{id}")
-	public Student viewStudent(@PathVariable("id") int id) {
-		return studentService.getStudent(id);
+	public StudentDto viewStudent(@PathVariable("id") int id) {
+		return studentConverter.entityToDto(studentService.getStudent(id));
 	}
 
 	@DeleteMapping("/deleteStudent/{id}")
@@ -41,7 +45,7 @@ public class StudentController {
 	}
 
 	@PutMapping("/updateStudent/{id}")
-	public Student updateStudent(@RequestBody Student Student, @PathVariable("id") int id) {
-		return studentService.updateStudent(Student, id);
+	public StudentDto updateStudent(@RequestBody Student Student, @PathVariable("id") int id) {
+		return studentConverter.entityToDto(studentService.updateStudent(Student, id));
 	}
 }
